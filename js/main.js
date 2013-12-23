@@ -8,7 +8,7 @@ window.App = {
 
 window.template = function(id) {
 	return _.template( $('#' + id).html());
-	
+
 };
 
 App.Models.Task = Backbone.Model.extend({});
@@ -36,9 +36,16 @@ App.Views.Task = Backbone.View.extend({
 	tagName: 'li',
 
 	events: {
+		'click .edit' : 'editTask'
+	},
+
+	editTask: function() {
+		var newTaskTitle = prompt('What would you like to change the text to?', this.model.get('title'));
+		this.model.set('title', newTaskTitle);
 	},
 
 	template: template('taskTemplate'),
+
 
 	render: function() {
 		var template = this.template(this.model.toJSON());
@@ -47,7 +54,7 @@ App.Views.Task = Backbone.View.extend({
 	}
 });
 
-var tasksCollection = new App.Collections.Tasks([
+window.tasksCollection = new App.Collections.Tasks([
 	{
 		title: 'go to the store',
 		priority: 4
